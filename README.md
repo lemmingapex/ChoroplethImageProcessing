@@ -1,4 +1,4 @@
-Choropleth_Image_Processing
+Choropleth Image Processing
 ===========================
 
-Java code to Perform Image Processing
+Java code to Perform Stupid Image Processing
