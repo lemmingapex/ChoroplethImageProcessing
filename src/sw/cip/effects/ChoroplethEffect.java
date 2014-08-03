@@ -1,4 +1,4 @@
-package main.java.sw.cip.effects;
+package sw.cip.effects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -146,10 +146,26 @@ class ChoroplethEffect {
 	}
 
 	public static void main(String[] args) {
+
+		int blur = 20;
+		String inputFile = "./resources/input.png";
+		String outputFile = "./resources/output.png";
+		if (args.length != 3) {
+			System.err.println("Wrong number of arguments.\n\nUsage: <input file.png> <output file.png> <blur radius>\n\nExample: " + inputFile + " " +  outputFile + " " + blur);
+		} else {
+			inputFile = args[0];
+			outputFile = args[1];
+			try {
+				blur = Integer.parseInt(args[2]);
+			} catch (NumberFormatException e) {
+				System.err.println("Could not parse blur radius.  Using radius of " + blur + ".");
+			}
+		}
+
 		ChoroplethEffect choroplethEffect = new ChoroplethEffect();
 
-		File input = new File("./resources/input.png");
-		File output = new File("./resources/heatmap.png");
+		File input = new File(inputFile);
+		File output = new File(outputFile);
 
 		BufferedImage inputBuffer = null;
 		try {
@@ -157,7 +173,7 @@ class ChoroplethEffect {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		BufferedImage outputBuffer = choroplethEffect.choropleth(inputBuffer, 15);
+		BufferedImage outputBuffer = choroplethEffect.choropleth(inputBuffer, blur);
 
 		try {
 			ImageIO.write(outputBuffer, "png", output);
